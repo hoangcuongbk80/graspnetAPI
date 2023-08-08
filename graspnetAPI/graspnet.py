@@ -88,7 +88,7 @@ class GraspNet():
         if split == 'all':
             self.sceneIds = list(range(TOTAL_SCENE_NUM))
         elif split == 'train':
-            self.sceneIds = list(range(100))
+            self.sceneIds = list(range(70, 71)) #100
         elif split == 'test':
             self.sceneIds = list(range(100, 190))
         elif split == 'test_seen':
@@ -618,6 +618,7 @@ class GraspNet():
             # grasp = dict()
             grasp_group = GraspGroup()
             for i, (obj_idx, trans) in enumerate(zip(obj_list, pose_list)):
+                print("Cuong: ", obj_idx)
 
                 sampled_points, offsets, fric_coefs = grasp_labels[obj_idx]
                 collision = collision_dump[i]

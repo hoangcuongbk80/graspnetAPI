@@ -5,7 +5,7 @@ __version__ = '1.0'
 # change the graspnet_root path
 
 ####################################################################
-graspnet_root = '/graspnet' # ROOT PATH FOR GRASPNET
+graspnet_root = '/media/cuong/HD-PZFU3/datasets/graspnet' # ROOT PATH FOR GRASPNET
 ####################################################################
 
 from graspnetAPI import GraspNet

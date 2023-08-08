@@ -200,6 +200,32 @@ class Grasp():
 
         - list of open3d.geometry.Geometry of the gripper.
         '''
+        '''
+        color_mapping = {
+        0: (0, 0, 0),   # Red
+        29: (0, 1, 0),   # Green
+        30: (0, 0, 1),   # Blue
+        62: (1, 1, 0),   # Yellow
+        8: (1, 0, 1),   # Magenta
+        20: (0, 1, 1),   # Cyan
+        22: (0.5, 0, 0), # Maroon
+        15: (0, 0.5, 0), # Dark green
+        18: (0, 0, 0.5), # Navy blue
+        57: (0.5, 0.5, 0), # Olive
+        56: (0.5, 0, 0.5), # Purple
+        11: (0, 0.5, 0.5), # Teal
+        12: (0.75, 0, 0), # Brown
+        13: (0, 0.75, 0), # Dark lime green
+        14: (0, 0, 0.75), # Dark blue
+        15: (0.75, 0.75, 0), # Dark yellow
+        16: (0.75, 0, 0.75), # Dark purple
+        17: (0, 0.75, 0.75), # Dark cyan
+        18: (0.5, 0.5, 0.5), # Gray
+        19: (0.9, 0.9, 0.9), # Light gray
+        }
+        color = color_mapping.get(self.object_id, (1, 1, 1))  # Default color is white (1, 0, 0)
+        '''
+        color = (1,0,0)
         return plot_gripper_pro_max(self.translation, self.rotation_matrix, self.width, self.depth, score = self.score, color = color)
 
 class GraspGroup():
