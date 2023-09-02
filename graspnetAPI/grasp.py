@@ -4,6 +4,7 @@ import numpy as np
 import open3d as o3d
 import copy
 import cv2
+import random
 
 from .utils.utils import plot_gripper_pro_max, batch_rgbdxyz_2_rgbxy_depth, get_batch_key_points, batch_key_points_2_tuple, framexy_depth_2_xyz, batch_framexy_depth_2_xyz, center_depth, key_point_2_rotation, batch_center_depth, batch_framexy_depth_2_xyz, batch_key_point_2_rotation
 
@@ -200,32 +201,42 @@ class Grasp():
 
         - list of open3d.geometry.Geometry of the gripper.
         '''
-        '''
+        
         color_mapping = {
-        0: (0, 0, 0),   # Red
-        29: (0, 1, 0),   # Green
-        30: (0, 0, 1),   # Blue
-        62: (1, 1, 0),   # Yellow
-        8: (1, 0, 1),   # Magenta
-        20: (0, 1, 1),   # Cyan
-        22: (0.5, 0, 0), # Maroon
-        15: (0, 0.5, 0), # Dark green
-        18: (0, 0, 0.5), # Navy blue
-        57: (0.5, 0.5, 0), # Olive
-        56: (0.5, 0, 0.5), # Purple
-        11: (0, 0.5, 0.5), # Teal
-        12: (0.75, 0, 0), # Brown
-        13: (0, 0.75, 0), # Dark lime green
-        14: (0, 0, 0.75), # Dark blue
-        15: (0.75, 0.75, 0), # Dark yellow
-        16: (0.75, 0, 0.75), # Dark purple
-        17: (0, 0.75, 0.75), # Dark cyan
-        18: (0.5, 0.5, 0.5), # Gray
-        19: (0.9, 0.9, 0.9), # Light gray
+            2: (1.0, 0.0, 0.0),    # Maroon
+            5: (0.0, 1.0, 0.0),    # Dark green
+            7: (0.0, 0.0, 1.0),    # Brown
+            8: (1.0, 1.0, 0.0),    # Magenta
+            9: (1.0, 0.0, 1.0),    # Dark lime green
+            11: (0.0, 1.0, 1.0),   # Teal
+            15: (1.0, 1.0, 1.0),   # Dark blue
+            17: (0.5, 0.0, 0.0),   # Dark cyan
+            18: (0.0, 0.5, 0.0),   # Navy blue
+            20: (0.0, 0.0, 0.5),   # Cyan
+            22: (0.5, 0.5, 0.0),   # Reddish
+            29: (0.0, 0.5, 0.5),   # Bright green
+            30: (0.5, 0.5, 0.5),   # Bright blue
+            36: (1.0, 0.5, 0.0),   # Purplish
+            37: (1.0, 0.5, 0.5),   # Olive
+            38: (1.0, 0.5, 0.0),   # (0.0, 1.0, 0.5)
+            40: (0.75, 1.0, 0.2),   # Purplish
+            41: (0.5, 1.0, 0.5),   # Yellowish
+            57: (0.5, 0.0, 1.0),   # Olive
+            58: (0.0, 0.5, 1.0),   # Gray
+            62: (0.3, 0.2, 1.0),   # Yellow
+            63: (1.0, 0.7, 0.2),   # Yellow
+            66: (1.0, 0.2, 0.4),   # Gray
+            69: (0.7, 0.7, 0.2),   # Olive
         }
+
         color = color_mapping.get(self.object_id, (1, 1, 1))  # Default color is white (1, 0, 0)
-        '''
-        color = (1,0,0)
+        
+        # Randomly decide whether to use the correct color or a wrong color
+        # if random.random() < 0.1:  # 10% chance
+        #     wrong_color = (random.random(), random.random(), random.random())
+        #     color = wrong_color
+
+        #color = (0.9,0,0)
         return plot_gripper_pro_max(self.translation, self.rotation_matrix, self.width, self.depth, score = self.score, color = color)
 
 class GraspGroup():

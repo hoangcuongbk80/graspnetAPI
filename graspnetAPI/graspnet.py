@@ -631,8 +631,12 @@ class GraspNet():
                 angles = offsets[:, :, :, :, 0]
                 depths = offsets[:, :, :, :, 1]
                 widths = offsets[:, :, :, :, 2]
+                #print(widths)
 
-                mask1 = ((fric_coefs <= fric_coef_thresh) & (fric_coefs > 0) & ~collision)
+                #mask1 = ((fric_coefs <= fric_coef_thresh) & (fric_coefs > 0) & ~collision)
+                #Cuong
+                mask1 = ((fric_coefs <= fric_coef_thresh) & (fric_coefs > 0) & (widths<0.08 ) & ~collision)
+                
                 target_points = target_points[mask1]
                 target_points = transform_points(target_points, trans)
                 target_points = transform_points(target_points, np.linalg.inv(camera_pose))

@@ -209,12 +209,17 @@ def vis6D(dataset_root, scene_name, anno_idx, camera, align_to_table=True, save_
     '''
     model_list, obj_list, pose_list = generate_scene_model(dataset_root, scene_name, anno_idx, return_poses=True, align=align_to_table, camera=camera)
     point_cloud = generate_scene_pointcloud(dataset_root, scene_name, anno_idx, align=align_to_table, camera=camera)
-    point_cloud = point_cloud.voxel_down_sample(voxel_size=0.005)
+    point_cloud = point_cloud.voxel_down_sample(voxel_size=0.003)
 
     vis = o3d.visualization.Visualizer()
     vis.create_window(width = 1280, height = 720)
     ctr = vis.get_view_control()
     param = get_camera_parameters(camera=camera)
+
+    #Cuong
+    opt2 = vis.get_render_option()
+    opt2.point_size = 1
+    opt2.background_color = np.asarray([0.85, 0.85, 0.85])
 
     if align_to_table:
         cam_pos = np.load(os.path.join(dataset_root, 'scenes', scene_name, camera, 'cam0_wrt_table.npy'))
@@ -237,9 +242,9 @@ def vis6D(dataset_root, scene_name, anno_idx, camera, align_to_table=True, save_
         filename = os.path.join(save_folder, '{}_{}_6d.png'.format(scene_name, camera))
         vis.capture_screen_image(filename, do_render=True)
         if show:
-            o3d.visualization.draw_geometries([point_cloud, *model_list])
-
-
+            vis.run()
+            vis.destroy_window()
+            #o3d.visualization.draw_geometries([point_cloud, *model_list])
 
 def visObjGrasp(dataset_root, obj_idx, num_grasp=10, th=0.5, max_width=0.08, save_folder='save_fig', show=False):
     '''

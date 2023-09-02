@@ -477,9 +477,18 @@ def plot_gripper_pro_max(center, R, width, depth, score=1, color=None):
     if color is not None:
         color_r, color_g, color_b = color
     else:
-        color_r = score # red for high score
-        color_g = 0
-        color_b = 1 - score # blue for low score
+        if score > 0.8:
+            color_g = 1
+            color_r = 0
+        else: 
+            if score<0.35:
+                color_g = 0
+                color_r = 1
+            else:
+                color_g = score - 0.3
+                color_r = 1-score+0.3
+
+        color_b = 0 #1 - score # blue for low score
     
     left = create_mesh_box(depth+depth_base+finger_width, finger_width, height)
     right = create_mesh_box(depth+depth_base+finger_width, finger_width, height)
